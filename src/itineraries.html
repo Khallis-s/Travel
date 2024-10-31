@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Weather Itineraries</title>
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+    <div class="side-menu" id="sideMenu">
+        <div class="menu-header">
+            <i class="fas fa-cloud-sun" style="font-size: 40px; color: white;"></i>
+            <h3>Weather App</h3>
+        </div>
+        <ul class="menu-items">
+            <li>
+                <a href="index.html" onclick="loadPage('weather')">
+                    <i class="fas fa-cloud-sun"></i>
+                    Weather
+                </a>
+            </li>
+            <li>
+                <a href="advisories.html" onclick="loadPage('advisories')">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    Advisories
+                </a>
+            </li>
+            <li>
+                <a href="itineraries.html" class="active" onclick="loadPage('itineraries')">
+                    <i class="fas fa-route"></i>
+                    Itineraries
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="weather-container">
+        <h1 class="app-title">Weather Itineraries</h1>
+        
+        <div class="itinerary-controls">
+            <button onclick="showNewItineraryForm()" class="action-button">
+                <i class="fas fa-plus"></i> New Itinerary
+            </button>
+        </div>
+
+        <!-- New Itinerary Form Modal -->
+        <div id="itineraryForm" style="display: none;">
+            <form id="newItineraryForm">
+                <input type="text" id="location" placeholder="Destination" required>
+                <input type="date" id="date" required>
+                
+                <div id="activitiesList">
+                    <!-- Activities will be added here -->
+                </div>
+                
+                <button type="button" class="add-activity-btn" onclick="addActivityInput()">Add Activity</button>
+                
+                <textarea id="notes" placeholder="Notes"></textarea>
+                
+                <button type="submit" class="save-btn">Save Itinerary</button>
+                <button type="button" class="cancel-btn" onclick="closeItineraryForm()">Cancel</button>
+            </form>
+        </div>
+
+        <!-- Itineraries List -->
+        <div id="itinerariesContainer" class="itineraries-container">
+            <!-- Itineraries will be displayed here -->
+        </div>
+
+        <!-- Add this after the itineraries container -->
+        <div class="travel-tips-section">
+            <h2 class="section-title">Travel Tips</h2>
+            <div class="tips-container">
+                <div class="tip-card">
+                    <div class="tip-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <h3>Best Time to Visit</h3>
+                    <p>Plan your visit during off-peak hours to avoid crowds and get better rates.</p>
+                </div>
+
+                <div class="tip-card">
+                    <div class="tip-icon">
+                        <i class="fas fa-umbrella"></i>
+                    </div>
+                    <h3>Weather Preparation</h3>
+                    <p>Check local weather patterns and pack appropriate clothing and gear.</p>
+                </div>
+
+                <div class="tip-card">
+                    <div class="tip-icon">
+                        <i class="fas fa-utensils"></i>
+                    </div>
+                    <h3>Local Cuisine</h3>
+                    <p>Try local specialties and research popular dining spots in advance.</p>
+                </div>
+
+                <div class="tip-card">
+                    <div class="tip-icon">
+                        <i class="fas fa-map-marked-alt"></i>
+                    </div>
+                    <h3>Local Transportation</h3>
+                    <p>Research public transportation options and download offline maps.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Weather-based Suggestions -->
+        <div id="weatherSuggestions" class="weather-suggestions">
+            <!-- Weather-based suggestions will be loaded here -->
+        </div>
+    </div>
+
+    <!-- Add this before the itineraries.js script -->
+    <script>
+        function loadPage(page) {
+            if (!window.electronAPI) {
+                console.error('Electron API not initialized');
+                return;
+            }
+            if (page === 'itineraries') {
+                return; // Already on itineraries page
+            }
+            window.electronAPI.loadPage(page);
+        }
+    </script>
+
+    <!-- Load the main itineraries script -->
+    <script src="itineraries.js"></script>
+</body>
+</html> 

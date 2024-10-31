@@ -1,0 +1,21 @@
+Travel Itinerary
+=================
+
+Destination: japan
+Date: 2030-10-21
+
+Weather Information
+------------------
+Temperature: 17.3
+Condition: Clear
+Forecast: 18.1Â°C average
+
+Activities
+---------
+14:40 - dsadsa
+
+Notes
+-----
+dsasd
+
+Last Updated: 31/10/2024, 02:39:27

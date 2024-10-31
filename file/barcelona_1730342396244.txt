@@ -1,0 +1,21 @@
+Travel Itinerary
+=================
+
+Destination: barcelona
+Date: 2024-11-09
+
+Weather Information
+------------------
+Temperature: 19.3
+Condition: Partly cloudy
+Forecast: 19Â°C average
+
+Activities
+---------
+22:40 - jogging
+
+Notes
+-----
+asdsadsad
+
+Last Updated: 31/10/2024, 10:39:56

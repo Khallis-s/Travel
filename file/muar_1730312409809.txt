@@ -1,0 +1,21 @@
+Travel Itinerary
+=================
+
+Destination: muar
+Date: 2024-10-31
+
+Weather Information
+------------------
+Temperature: 27.2
+Condition: Partly cloudy
+Forecast: 28.3Â°C average
+
+Activities
+---------
+17:25 - Hiking
+
+Notes
+-----
+hoka
+
+Last Updated: 31/10/2024, 02:20:09

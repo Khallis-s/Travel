@@ -1,0 +1,21 @@
+Travel Itinerary
+=================
+
+Destination: mardid
+Date: 2024-11-21
+
+Weather Information
+------------------
+Temperature: N/A
+Condition: N/A
+Forecast: N/A
+
+Activities
+---------
+22:40 - jogging
+
+Notes
+-----
+jajajaja
+
+Last Updated: 31/10/2024, 10:37:38
