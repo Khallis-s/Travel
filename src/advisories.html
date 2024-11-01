@@ -2,22 +2,29 @@
 <html>
 <head>
     <title>Travel Advisories</title>
+    <!-- External stylesheets for main styling and Font Awesome icons -->
     <link rel="stylesheet" href="index.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body>
+    <!-- Side Navigation Menu -->
     <div class="side-menu" id="sideMenu">
+        <!-- App Logo and Title -->
         <div class="menu-header">
             <i class="fas fa-cloud-sun" style="font-size: 40px; color: white;"></i>
             <h3>WanderCast</h3>
         </div>
+        
+        <!-- Navigation Links -->
         <ul class="menu-items">
+            <!-- Each link uses loadPage() function for navigation handling -->
             <li>
                 <a href="index.html" onclick="loadPage('weather')">
                     <i class="fas fa-cloud-sun"></i>
                     Weather
                 </a>
             </li>
+            <!-- 'active' class indicates current page -->
             <li>
                 <a href="advisories.html" class="active" onclick="loadPage('advisories')">
                     <i class="fas fa-exclamation-triangle"></i>
@@ -30,6 +37,7 @@
                     Itineraries
                 </a>
             </li>
+            <!-- Exit button with confirmation modal -->
             <li>
                 <a href="#" onclick="confirmExit()" class="exit-link">
                     <i class="fas fa-sign-out-alt"></i>
@@ -39,6 +47,7 @@
         </ul>
     </div>
 
+    <!-- Exit Confirmation Modal -->
     <div id="exitModal" class="modal">
         <div class="modal-content confirm-modal">
             <div class="modal-body">
@@ -57,9 +66,11 @@
         </div>
     </div>
 
+    <!-- Main Content Container -->
     <div class="weather-container">
         <h1 class="app-title">Travel Advisories</h1>
         
+        <!-- Search Input Section -->
         <div class="search-container">
             <input type="text" id="locationInput" placeholder="Enter destination">
             <button id="searchButton" class="search-button">
@@ -67,13 +78,16 @@
             </button>
         </div>
 
+        <!-- Results Container -->
         <div id="advisoriesContainer" class="advisories-container">
-            <!-- Advisories will be displayed here -->
+            <!-- Dynamic content: Advisories will be displayed here via JavaScript -->
         </div>
 
+        <!-- Error Message Container -->
         <div id="error" class="error"></div>
     </div>
 
+    <!-- Link to JavaScript file -->
     <script src="advisories.js"></script>
 </body>
 </html> 
