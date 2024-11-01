@@ -6,6 +6,40 @@ try {
     console.error('Failed to load electron:', error);
 }
 
+// Add exit functions
+function confirmExit() {
+    console.log('Confirm exit clicked');
+    const modal = document.getElementById('exitModal');
+    if (modal) {
+        modal.style.display = 'block';
+    } else {
+        console.error('Exit modal not found');
+    }
+}
+
+function closeExitModal() {
+    console.log('Close modal clicked');
+    const modal = document.getElementById('exitModal');
+    if (modal) {
+        modal.style.display = 'none';
+    }
+}
+
+function exitApp() {
+    console.log('Exit app clicked');
+    if (ipcRenderer) {
+        ipcRenderer.send('exit-app');
+    }
+}
+
+// Add click outside modal to close
+window.onclick = function(event) {
+    const modal = document.getElementById('exitModal');
+    if (event.target === modal) {
+        closeExitModal();
+    }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     console.log('DOM Content Loaded');
     

@@ -13,7 +13,7 @@
     <div class="side-menu" id="sideMenu">
         <div class="menu-header">
             <i class="fas fa-cloud-sun" style="font-size: 40px; color: white;"></i>
-            <h3>Weather App</h3>
+            <h3>WanderCast</h3>
         </div>
         <ul class="menu-items">
             <li>
@@ -32,6 +32,12 @@
                 <a href="#" onclick="loadPage('itineraries')">
                     <i class="fas fa-route"></i>
                     Itineraries
+                </a>
+            </li>
+            <li>
+                <a href="#" onclick="confirmExit()" class="exit-link">
+                    <i class="fas fa-sign-out-alt"></i>
+                    Exit
                 </a>
             </li>
         </ul>
@@ -53,6 +59,24 @@
 
         <div id="weatherInfo"></div>
         <div id="error" class="error"></div>
+    </div>
+
+    <div id="exitModal" class="modal">
+        <div class="modal-content confirm-modal">
+            <div class="modal-body">
+                <i class="fas fa-exclamation-circle"></i>
+                <h3>Exit Application</h3>
+                <p>Are you sure you want to exit?</p>
+            </div>
+            <div class="modal-buttons">
+                <button class="modal-button cancel-button" onclick="closeExitModal()">
+                    Cancel
+                </button>
+                <button class="modal-button confirm-button" onclick="exitApp()">
+                    Exit
+                </button>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -78,6 +102,11 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => {
+                document.getElementById('locationInput').value = 'Kuala Lumpur';
+                updateLocation();
+            }, 500);
+
             const menuToggle = document.getElementById('menuToggle');
             const sideMenu = document.getElementById('sideMenu');
             const weatherContainer = document.querySelector('.weather-container');
@@ -110,11 +139,6 @@
                     menuToggle.style.left = isMenuOpen ? '270px' : '20px';
                 }
             });
-
-            // Set default location to Kuantan
-            document.getElementById('locationInput').value = 'Kuala Lumpur';
-            // Fetch weather for Kuantan on page load
-            updateLocation();
         });
 
         function updateLocation() {
@@ -231,6 +255,37 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="forecast-section">
+                        <h2 class="forecast-title">3-Day Forecast</h2>
+                        <div class="forecast-grid">
+                            ${data.forecast.forecastday.map(day => `
+                                <div class="forecast-card">
+                                    <div class="forecast-date">${formatDate(day.date)}</div>
+                                    <img src="https:${day.day.condition.icon}" alt="Weather icon" class="forecast-icon">
+                                    <div class="forecast-temps">
+                                        <span class="max-temp">${day.day.maxtemp_c}°C</span>
+                                        <span class="min-temp">${day.day.mintemp_c}°C</span>
+                                    </div>
+                                    <div class="forecast-condition">${day.day.condition.text}</div>
+                                    <div class="forecast-details">
+                                        <div class="detail-item">
+                                            <i class="fas fa-tint"></i>
+                                            <span>${day.day.avghumidity}%</span>
+                                        </div>
+                                        <div class="detail-item">
+                                            <i class="fas fa-wind"></i>
+                                            <span>${day.day.maxwind_kph} km/h</span>
+                                        </div>
+                                        <div class="detail-item">
+                                            <i class="fas fa-cloud-rain"></i>
+                                            <span>${day.day.daily_chance_of_rain}%</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
                 </div>
             `;
         });
@@ -242,7 +297,11 @@
 
         function formatDate(dateString) {
             const date = new Date(dateString);
-            return date.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+            return date.toLocaleDateString('en-US', { 
+                weekday: 'short', 
+                month: 'short', 
+                day: 'numeric'
+            });
         }
 
         function getNext5HoursForecast(hourlyData) {
@@ -267,6 +326,42 @@
                     <div class="forecast-condition">${hour.condition.text}</div>
                 </div>
             `).join('');
+        }
+
+        ipcRenderer.on('app-ready', () => {
+            document.getElementById('locationInput').value = 'Kuala Lumpur';
+            updateLocation();
+        });
+
+        function confirmExit() {
+            console.log('Confirm exit clicked'); // Debug log
+            const modal = document.getElementById('exitModal');
+            if (modal) {
+                modal.style.display = 'block';
+            } else {
+                console.error('Exit modal not found'); // Debug log
+            }
+        }
+
+        function closeExitModal() {
+            console.log('Close modal clicked'); // Debug log
+            const modal = document.getElementById('exitModal');
+            if (modal) {
+                modal.style.display = 'none';
+            }
+        }
+
+        function exitApp() {
+            console.log('Exit app clicked'); // Debug log
+            ipcRenderer.send('exit-app');
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('exitModal');
+            if (event.target === modal) {
+                closeExitModal();
+            }
         }
     </script>
 </body>

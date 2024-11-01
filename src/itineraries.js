@@ -530,13 +530,11 @@ ${notes || 'No notes'}
         const contentDiv = document.getElementById('txtContent');
         
         contentDiv.innerHTML = `
-            <div class="txt-file-item">
-                <div class="txt-file-header">
-                    <h3>Itinerary for ${location}</h3>
-                    <span class="txt-file-date">Created: ${new Date().toLocaleString()}</span>
-                </div>
-                <pre class="txt-file-content">${content}</pre>
+            <div class="txt-file-header">
+                <h3>Itinerary for ${location}</h3>
+                <span class="txt-file-date">Created: ${new Date().toLocaleString()}</span>
             </div>
+            <pre class="txt-file-content">${formatItineraryContent(content)}</pre>
         `;
         
         modal.style.display = 'block';
@@ -548,13 +546,20 @@ ${notes || 'No notes'}
 
 function createModal() {
     const modalHtml = `
-        <div id="txtModal" class="modal">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2>Itinerary Details</h2>
-                    <span class="close-modal" onclick="closeTxtModal()">&times;</span>
+        <div id="txtModal" class="txt-modal">
+            <div class="txt-modal-content">
+                <div class="txt-modal-header">
+                    <h3>Itinerary Details</h3>
                 </div>
-                <div id="txtContent" class="modal-body">
+                <div class="txt-modal-body">
+                    <div id="txtContent">
+                        <!-- Content will be inserted here -->
+                    </div>
+                </div>
+                <div class="txt-modal-footer">
+                    <button class="txt-close-btn" onclick="closeTxtModal()">
+                        Close
+                    </button>
                 </div>
             </div>
         </div>
@@ -568,8 +573,15 @@ function showError(message) {
     const contentDiv = document.getElementById('txtContent');
     
     contentDiv.innerHTML = `
-        <div class="error-message">
+        <div class="txt-error-message">
+            <i class="fas fa-exclamation-circle"></i>
             ${message}
+        </div>
+        <div class="txt-file-actions">
+            <button class="txt-action-button txt-close-btn" onclick="closeTxtModal()">
+                <i class="fas fa-times"></i>
+                Close
+            </button>
         </div>
     `;
     modal.style.display = 'block';
@@ -683,4 +695,59 @@ function handleLocationUpdate(location) {
     // Handle location updates locally instead
     console.log('Location updated:', location);
     // Add any necessary local handling
+}
+
+// Add exit functions
+function confirmExit() {
+    console.log('Confirm exit clicked'); // Debug log
+    const modal = document.getElementById('exitModal');
+    if (modal) {
+        modal.style.display = 'block';
+    } else {
+        console.error('Exit modal not found'); // Debug log
+    }
+}
+
+function closeExitModal() {
+    console.log('Close modal clicked'); // Debug log
+    const modal = document.getElementById('exitModal');
+    if (modal) {
+        modal.style.display = 'none';
+    }
+}
+
+function exitApp() {
+    console.log('Exit app clicked'); // Debug log
+    if (ipcRenderer) {
+        ipcRenderer.send('exit-app');
+    }
+}
+
+// Close modal when clicking outside
+window.onclick = function(event) {
+    const modal = document.getElementById('exitModal');
+    if (event.target === modal) {
+        closeExitModal();
+    }
+}
+
+// Add this to your existing DOMContentLoaded event listener
+document.addEventListener('DOMContentLoaded', () => {
+    // ... your existing code ...
+
+    // Set up exit functionality
+    const exitLink = document.querySelector('.exit-link');
+    if (exitLink) {
+        exitLink.addEventListener('click', confirmExit);
+    }
+});
+
+// Helper function to format the content with proper spacing
+function formatItineraryContent(content) {
+    // Ensure consistent spacing and alignment
+    const lines = content.split('\n').map(line => line.trim());
+    const formattedContent = lines
+        .filter(line => line.length > 0) // Remove empty lines
+        .join('\n');
+    return formattedContent;
 }

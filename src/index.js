@@ -185,6 +185,11 @@ Last Updated: ${new Date().toLocaleString('en-GB')}
     }
   });
 
+  // Add this after creating all IPC handlers
+  mainWindow.webContents.on('did-finish-load', () => {
+    mainWindow.webContents.send('app-ready');
+  });
+
   // Show main window after splash
   setTimeout(() => {
     mainWindow.show();
@@ -207,4 +212,10 @@ app.on('activate', () => {
   if (BrowserWindow.getAllWindows().length === 0) {
     createWindow();
   }
+});
+
+// Add this to your existing IPC handlers
+ipcMain.on('exit-app', () => {
+  console.log('Exit command received');
+  app.quit();
 });

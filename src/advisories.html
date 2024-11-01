@@ -9,7 +9,7 @@
     <div class="side-menu" id="sideMenu">
         <div class="menu-header">
             <i class="fas fa-cloud-sun" style="font-size: 40px; color: white;"></i>
-            <h3>Weather App</h3>
+            <h3>WanderCast</h3>
         </div>
         <ul class="menu-items">
             <li>
@@ -30,7 +30,31 @@
                     Itineraries
                 </a>
             </li>
+            <li>
+                <a href="#" onclick="confirmExit()" class="exit-link">
+                    <i class="fas fa-sign-out-alt"></i>
+                    Exit
+                </a>
+            </li>
         </ul>
+    </div>
+
+    <div id="exitModal" class="modal">
+        <div class="modal-content confirm-modal">
+            <div class="modal-body">
+                <i class="fas fa-exclamation-circle"></i>
+                <h3>Exit Application</h3>
+                <p>Are you sure you want to exit?</p>
+            </div>
+            <div class="modal-buttons">
+                <button class="modal-button cancel-button" onclick="closeExitModal()">
+                    Cancel
+                </button>
+                <button class="modal-button confirm-button" onclick="exitApp()">
+                    Exit
+                </button>
+            </div>
+        </div>
     </div>
 
     <div class="weather-container">
